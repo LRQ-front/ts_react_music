@@ -1,0 +1,34 @@
+import styled from 'styled-components'
+
+export const LoginWrapper = styled.div`
+  width: 269px;
+  height: 126px;
+  /* background-position: 0 -300px; */
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(235, 235, 235);
+  border-bottom: 1px solid rgba(187, 187, 187);
+
+  p {
+    line-height: 25px;
+  }
+
+  a {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100px;
+    height: 31px;
+    line-height: 31px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    background-position: 0 -195px;
+    text-shadow: 0 1px 0 #8a060b;
+
+    :hover {
+      background-position: -110px -195px;
+    }
+  }
+`
