@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getSongDetail, getSongLyric } from '../service/player'
 import { ILyric, parseLyricToArr } from '@/utils/parse-lyric'
