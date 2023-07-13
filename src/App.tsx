@@ -40,6 +40,7 @@ function App() {
   }))
   return (
     <div className="app">
+      hello
       <AppHeader></AppHeader>
       {/* 异步加载组件需要使用suspense */}
       <Suspense fallback="">
