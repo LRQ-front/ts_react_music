@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { Suspense, useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import routes from './router'

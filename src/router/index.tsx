@@ -11,7 +11,10 @@ import React, { lazy } from 'react'
 //使用路由懒加载,会进行分包处理
 const Discover = lazy(() => import('@/views/Discover'))
 const Recommend = lazy(() => import('@/views/Discover/c-views/recommend'))
-const Ranking = lazy(() => import('@/views/Discover/c-views/ranking'))
+//prefetch预提取
+const Ranking = lazy(
+  () => import(/* webpackPrefetch:true */ '@/views/Discover/c-views/ranking')
+)
 const Songs = lazy(
   () => import(/* webpackPrefetch:true */ '@/views/Discover/c-views/songs')
 )
@@ -25,9 +28,11 @@ const Album = lazy(
   () => import(/* webpackPrefetch:true */ '@/views/Discover/c-views/album')
 )
 
-const Focus = lazy(() => import('@/views/focus'))
-const Mine = lazy(() => import('@/views/mine'))
-const Download = lazy(() => import('@/views/download'))
+const Focus = lazy(() => import(/* webpackPrefetch:true */ '@/views/focus'))
+const Mine = lazy(() => import(/* webpackPrefetch:true */ '@/views/mine'))
+const Download = lazy(
+  () => import(/* webpackPrefetch:true */ '@/views/download')
+)
 
 const routes: RouteObject[] = [
   {

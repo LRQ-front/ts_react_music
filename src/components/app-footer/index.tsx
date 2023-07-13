@@ -11,7 +11,6 @@ interface IProps {
 const AppFooter: React.FC<IProps> = () => {
   return (
     <AppFooterWrapper>
-      {' '}
       <div className="wrap-v2 content">
         <FooterLeft className="left">
           <div className="link">

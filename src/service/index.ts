@@ -6,12 +6,17 @@ const myRequest = new httpRequest({
   timeout: TIME_OUT
 })
 
+let ck: any
+if (localStorage.getItem('cookie')) {
+  ck = localStorage.getItem('cookie')
+}
+
 export const requestWithCK = new httpRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   withCredentials: true, //关键,
   params: {
-    cookie: JSON.parse(localStorage.getItem('cookie') as string)
+    cookie: ck && JSON.parse(ck)
   }
   // headers: {
   //   'X-Custom-Cookie': `${JSON.parse(localStorage.getItem('cookie') as string)}`
