@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-explicit-any': 'off'
   }
 }
