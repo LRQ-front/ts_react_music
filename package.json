@@ -2,7 +2,6 @@
   "name": "ts_react_music",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@alex_xu/react-slider-vertify": "^1.2.0",
     "@ant-design/icons": "^5.1.4",

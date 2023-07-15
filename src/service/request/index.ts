@@ -1,6 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
 import type { AxiosInstance } from 'axios'
-import eventBus from '@/utils/eventBus'
 
 import { MYRequestConfig } from './type'
 
@@ -13,8 +12,6 @@ class httpRequest {
     //1.全局拦截器，每个实例都有的拦截器
     this.instance.interceptors.request.use(
       (req) => {
-        // dispatch(changeCoverAction(true))
-        eventBus.emit('isCover', true)
         return req
       },
       (err) => {
@@ -23,8 +20,6 @@ class httpRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
-        // dispatch(changeCoverAction(false))
-        eventBus.emit('isCover', false)
         return res.data
       },
       (err) => {
