@@ -5,7 +5,10 @@ import LoginCode from '../../c-cpns/login-code'
 import LoginOther from '../../c-cpns/login-other'
 import LoginHeader from '@/components/dialog-header'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { changeOtherLoginAction } from '../../store'
+import {
+  changeOtherLoginAction,
+  changeShowCodePendingAction
+} from '../../store'
 
 interface IProps {
   children?: ReactNode
@@ -21,6 +24,7 @@ const LoginCodeMain: React.FC<IProps> = (props) => {
 
   function handleChangeMethod(flag: boolean) {
     dispatch(changeOtherLoginAction(flag))
+    dispatch(changeShowCodePendingAction(true))
   }
 
   // useEffect(() => {

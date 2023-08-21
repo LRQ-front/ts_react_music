@@ -6,7 +6,7 @@ export const CodePendingWrapper = styled.div`
     justify-content: space-between;
     .img {
       width: 125px;
-      height: 220px;
+      height: 200px;
     }
     .two-dimensional-code {
       padding-left: 25px;

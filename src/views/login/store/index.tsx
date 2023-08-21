@@ -90,7 +90,6 @@ export const fetchCheckPhoneAction = createAsyncThunk<
   { state: IRootState }
 >('checkphone', async (phone: number, { dispatch, getState }) => {
   const res = await checkSignPhone(phone)
-  // console.log(res)
   //有名字表示注册过
   if (res.nickname) {
     //手机号已经注册
@@ -98,7 +97,20 @@ export const fetchCheckPhoneAction = createAsyncThunk<
     const { captcha, phoneNumber } = getState().login
     const params = { phone: Number(phoneNumber), captcha: Number(captcha) }
     const res = await loginByPhone(params)
-    console.log(res)
+    console.log('手机登录结果', res)
+    if (res.code === 200) {
+      dispatch(storeUseInfoAction(res.cookie))
+      dispatch(changeShowPanelAction(false))
+      message.open({
+        content: `登录成功`,
+        duration: 2
+      })
+    } else {
+      message.open({
+        content: `登录失败，请重新操作`,
+        duration: 2
+      })
+    }
   } else {
     //没有注册过
     dispatch(changeShowSignPanelAction(true))
@@ -154,7 +166,7 @@ const initialState: IInitialState = {
   showSignPanel: false,
   nickname: '',
   captcha: '',
-  showCodePending: true,
+  showCodePending: true, //是否展示二维码界面还是待确认界面
   showCodeDisable: false
 }
 

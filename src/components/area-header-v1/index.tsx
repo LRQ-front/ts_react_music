@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import type { ReactNode } from 'react'
 import { AreaV1Wrapper } from './style'
 import { Link } from 'react-router-dom'
+import { message } from 'antd'
 interface IProps {
   children?: ReactNode
   title?: string
@@ -17,11 +18,20 @@ const AreaHeaderV1: React.FC<IProps> = (props) => {
     moreLink = '/',
     moreText = '更多'
   } = props
+
+  function handleClick() {
+    console.log('111')
+    message.open({
+      content: `功能未开发`,
+      duration: 1,
+      key: 'func'
+    })
+  }
   return (
     <AreaV1Wrapper className="sprite_02">
       <div className="left">
         <h3 className="title">{title}</h3>
-        <div className="keywords">
+        <div className="keywords" onClick={(e) => handleClick()}>
           {keywords.map((item) => {
             return (
               <div className="item" key={item}>

@@ -29,6 +29,7 @@ const LoginPhone: React.FC<IProps> = (props) => {
   const [hasPhoneTip, setHasPhone] = useState(false)
   const [showVerify, setVerify] = useState(false)
   const [emitVerifyCode, setemitVerifyCode] = useState(false)
+  const [isEmitCode, setIsEmitCode] = useState(false)
   const [countdown, setCountDown] = useState(30)
   const [showErrCodeTip, setShowErrCodeTip] = useState(false)
   const [showshouldEmitCodeTip, setShouldEmitCodeTip] = useState(false)
@@ -82,7 +83,7 @@ const LoginPhone: React.FC<IProps> = (props) => {
     //没有输入验证码
     if (!captcha) {
       setShowCodeErrTip(true)
-    } else if (!emitVerifyCode) {
+    } else if (!isEmitCode) {
       //还没有获取验证码
       setShouldEmitCodeTip(true)
     } else {
@@ -113,6 +114,7 @@ const LoginPhone: React.FC<IProps> = (props) => {
   //验证关闭
   function handleCloseClick(flag = false) {
     setVerify(flag)
+    setIsEmitCode(true)
   }
 
   //已经发出验证码，倒计时开始

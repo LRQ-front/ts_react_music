@@ -2,7 +2,7 @@ import React, { memo, useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { BarControl, BarOperator, BarPlayInfo, PlayBarWrapper } from './style'
-import { Slider, message } from 'antd'
+import { Slider } from 'antd'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { getImageSize, getPlayUrl, formatTime } from '@/utils/format'
 import {

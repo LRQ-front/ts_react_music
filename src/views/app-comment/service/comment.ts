@@ -7,6 +7,7 @@ export const getPlaylistComments = (id: number, offset?: number) => {
     params: {
       id,
       offset,
+      limit: 20,
       timestamp: Date.now()
     }
   })
@@ -27,8 +28,8 @@ export const operateComment = (
       type, //资源类型，2：歌单
       content,
       id, //评论的对应资源id
-      commentId,
-      timestamp: Date.now()
+      commentId
+      // timestamp: Date.now()
     }
   })
 }

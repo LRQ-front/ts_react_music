@@ -12,7 +12,7 @@ const AlbumItem: React.FC<IProps> = (props) => {
     <AlbumItemWrapper>
       <div className="top">
         <img src={itemData.picUrl} alt="" />
-        <a href="" className="cover sprite_covor"></a>
+        <a className="cover sprite_covor"></a>
       </div>
       <div className="bottom">
         <div className="name">{itemData.name}</div>

@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { LoginOtherWrapper } from './style'
 import { message } from 'antd'
-import { changeShowCodeMainAction } from '../../store'
+import { changeShowCodeMainAction, fetchCodeDataAction } from '../../store'
 import { useAppDispatch } from '@/store'
 interface IProps {
   children?: ReactNode
@@ -18,6 +18,7 @@ const LoginOther: React.FC<IProps> = (props) => {
   function handleChangeMethod() {
     if (isCheck) {
       showLoginMethod(false)
+      dispatch(fetchCodeDataAction())
     } else {
       message.open({
         content: '请先勾选同意《服务条款》、《隐私政策》、《儿童隐私政策》',

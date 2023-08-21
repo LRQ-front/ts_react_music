@@ -8,25 +8,34 @@ interface IState {
   cookie: string
   uid: number
   userPlayList: any[]
+  nickname: string
 }
 
 const initialState: IState = {
   avatarUrl: '',
   cookie: '',
   uid: -1,
-  userPlayList: [] //用户歌单,
+  userPlayList: [], //用户歌单,
+  nickname: ''
 }
 
 export const storeUseInfoAction = createAsyncThunk(
   'userinfo',
   async (cookie: string, { dispatch }) => {
-    document.cookie = cookie
+    // document.cookie = cookie
     localStorage.setItem('cookie', JSON.stringify(cookie))
     const res = await getLoginStatus(cookie)
-    // console.log('cookieRes', res)
+    console.log('cookieRes', res)
+
+    //返回结果判断cookie是否失效
+    if (!res.data.profile || !res.data.account) {
+      localStorage.removeItem('cookie')
+      return
+    }
 
     const uid = res.data.profile.userId
     const avatarUrl = res.data.profile.avatarUrl
+    const nickname = res.data.profile.nickname
     // console.log('avatarUrl', avatarUrl)
 
     //刚开始登录的时候，获取用户歌单
@@ -37,6 +46,7 @@ export const storeUseInfoAction = createAsyncThunk(
     dispatch(changeUidoAction(uid))
     dispatch(changeCookieAction(cookie))
     dispatch(changeAvataUrlAction(avatarUrl))
+    dispatch(changeNicknameAction(nickname))
   }
 )
 
@@ -59,6 +69,9 @@ const userSlice = createSlice({
     changeUidoAction(state, { payload }) {
       state.uid = payload
     },
+    changeNicknameAction(state, { payload }) {
+      state.nickname = payload
+    },
     changeCookieAction(state, { payload }) {
       state.cookie = payload
     },
@@ -75,6 +88,7 @@ export const {
   changeUidoAction,
   changeAvataUrlAction,
   changeUserPlayListAction,
+  changeNicknameAction,
   changeCookieAction
 } = userSlice.actions
 

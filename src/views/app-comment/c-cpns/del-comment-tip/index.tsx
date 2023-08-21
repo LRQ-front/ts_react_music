@@ -27,7 +27,9 @@ const CommentTip: React.FC<IProps> = () => {
       message.open({ content: '删除评论失败', duration: 1 })
     }
     dispatch(changeCloseTipAction(true))
-    dispatch(fetchCommentAction(0))
+    setTimeout(() => {
+      dispatch(fetchCommentAction(0))
+    }, 500)
   }
   return (
     <TipWrapper>

@@ -1,4 +1,4 @@
-import React, { memo, useState, useRef, ElementRef } from 'react'
+import React, { memo, useState, useRef, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { ContentWrapper } from './style'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -7,6 +7,8 @@ import { shallowEqual } from 'react-redux'
 import {
   changeCloseTipAction,
   changeCommentIdAction,
+  changeCommentsAction,
+  changeTotalAction,
   fetchCommentAction
 } from '../../store/comment'
 import classNames from 'classnames'
@@ -49,6 +51,13 @@ const CommentContent: React.FC<IProps> = () => {
     shallowEqual
   )
 
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   //   dispatch(fetchCommentAction(0))
+  //   // }, 1000)
+  //   console.log(total)
+  // }, [total])
+
   function handleCurrentPageChange(page: number) {
     setCurrentPage(page)
     const offset = (page - 1) * 20
@@ -80,9 +89,8 @@ const CommentContent: React.FC<IProps> = () => {
   }
 
   function handleReplyChange(e: any) {
-    // console.log(e.target.defaultValue)
     const content = e.target.value.replace(e.target.defaultValue, '')
-    // console.log(content)
+
     setReplyText(content)
   }
 
@@ -91,7 +99,10 @@ const CommentContent: React.FC<IProps> = () => {
     const res = await operateComment(2, 2, sourceId, replyText, commentId)
     // console.log(res)
     //获取最新评论
-    dispatch(fetchCommentAction(0))
+    setTimeout(() => {
+      dispatch(fetchCommentAction(0))
+    }, 500)
+
     //关闭回复
     setShowReply(false)
     if (res.code === 200) {
@@ -223,7 +234,8 @@ const CommentContent: React.FC<IProps> = () => {
           <Pagination
             current={currentPage}
             onChange={(e) => handleCurrentPageChange(e)}
-            total={Math.ceil(total / 20)}
+            total={total}
+            pageSize={20}
           />
         </div>
       )}

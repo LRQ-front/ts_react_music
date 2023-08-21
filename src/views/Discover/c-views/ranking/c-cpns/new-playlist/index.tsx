@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { NewPlaylistWrapper } from './style'
 import DialogHeader from '@/components/dialog-header'
 import { Input, Button } from 'antd'
-import { addSongTolist, newPlaylist } from '@/service/modules/main'
+import { newPlaylist } from '@/service/modules/main'
 import { message } from 'antd'
 import { useAppDispatch } from '@/store'
 import {

@@ -9,9 +9,16 @@ export default function useVerifyLogin() {
   const dispatch = useAppDispatch()
 
   const verify = () => {
-    if (localStorage.getItem('cookie') === '') {
+    console.log(localStorage.getItem('cookie'))
+
+    if (
+      !localStorage.getItem('cookie') ||
+      localStorage.getItem('cookie') === ''
+    ) {
       dispatch(fetchCodeDataAction())
       dispatch(changeShowPanelAction(true))
+      console.log('打印了')
+
       return false
     } else {
       return true

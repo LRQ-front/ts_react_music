@@ -49,12 +49,14 @@ const RankingCategory: React.FC<IProps> = () => {
     dispatch(fetchCommentAction(0))
   }, [rankSort])
 
-  async function handleItemClick(index: number) {
+  function handleItemClick(index: number) {
     setCurrentIndex(index)
     //更改榜单分类
     const id = rankSort[index].id
-    const res = await getSortDetail(id)
-    dispatch(changeCurrentSortDetailInfoAction(res.playlist))
+    getSortDetail(id).then((res) => {
+      dispatch(changeCurrentSortDetailInfoAction(res.playlist))
+    })
+
     // dispatch(changeCurrentSortListAction(id))
 
     //将榜单对应的id存起来，用于获取评论

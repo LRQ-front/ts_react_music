@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import { CommentWrapper } from './style'
 import ComnmentHeader from './c-cpns/comnment-header'
 import { useAppDispatch, useAppSelector } from '@/store'
-import TextArea from 'antd/es/input/TextArea'
-import { Button } from 'antd'
+// import TextArea from 'antd/es/input/TextArea'
+import { Button, Input } from 'antd'
 import CommentContent from './c-cpns/comment-content'
 import { message } from 'antd'
 import { operateComment } from './service/comment'
@@ -13,6 +13,8 @@ import useVerifyLogin from '@/hooks/useVerifyLogin'
 interface IProps {
   children?: ReactNode
 }
+
+const { TextArea } = Input
 
 const Comment: React.FC<IProps> = () => {
   const [content, setContent] = useState('')
@@ -33,6 +35,9 @@ const Comment: React.FC<IProps> = () => {
   async function handleCommentClick() {
     const res = await operateComment(1, 2, sourceId, content)
     if (res.code === 200) {
+      setTimeout(() => {
+        dispatch(fetchCommentAction(0))
+      }, 500)
       message.open({
         content: '评论成功',
         duration: 1
@@ -44,11 +49,12 @@ const Comment: React.FC<IProps> = () => {
       })
     }
 
-    dispatch(fetchCommentAction(0))
     setContent('')
   }
 
   function handleFocus() {
+    console.log('评论了')
+
     verify()
   }
 

@@ -5,6 +5,7 @@ import LoginCodeWait from '../login-code-wait'
 import LoginCodePending from '../login-code-pending'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
+import { fetchCodeDataAction } from '../../store'
 interface IProps {
   children?: ReactNode
   showLoginMethod: (flag: boolean) => void
@@ -12,6 +13,7 @@ interface IProps {
 
 const LoginCode: React.FC<IProps> = (props) => {
   const { showLoginMethod } = props
+  const dispatch = useAppDispatch()
 
   // const [showCodePending, setShowCodePending] = useState(true)
   const { showCodePending } = useAppSelector(
@@ -28,6 +30,11 @@ const LoginCode: React.FC<IProps> = (props) => {
   // function handleShowPending(e: boolean) {
   //   setShowCodePending(e)
   // }
+  // useEffect(() => {
+  //   if (showCodePending) {
+  //     dispatch(fetchCodeDataAction())
+  //   }
+  // }, [showCodePending])
 
   return (
     <LoginCodeWrapper>

@@ -1,7 +1,7 @@
 import React, { ElementRef, memo, useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { AlbumWrapper } from './style'
-import { Carousel } from 'antd'
+import { Carousel, message } from 'antd'
 import AreaHeaderV1 from '@/components/area-header-v1'
 import { useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
@@ -26,7 +26,13 @@ const NewAlbum: React.FC<IProps> = () => {
   function handleNext() {
     bannerRef.current?.next()
   }
-
+  function handleClick() {
+    message.open({
+      content: `功能未开发`,
+      duration: 1,
+      key: 'func'
+    })
+  }
   return (
     <AlbumWrapper>
       <AreaHeaderV1 title="新碟上架" moreLink="/discover/album"></AreaHeaderV1>
@@ -43,7 +49,11 @@ const NewAlbum: React.FC<IProps> = () => {
                   <div className="item-list">
                     {newAlbum?.slice(item * 5, (item + 1) * 5)?.map((item) => {
                       return (
-                        <div className="album" key={item.name}>
+                        <div
+                          className="album"
+                          key={item.name}
+                          onClick={handleClick}
+                        >
                           <NewAlbumItem itemData={item}></NewAlbumItem>
                         </div>
                       )
