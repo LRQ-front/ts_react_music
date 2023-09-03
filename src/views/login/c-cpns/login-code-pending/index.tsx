@@ -6,8 +6,12 @@ import { shallowEqual } from 'react-redux'
 import {
   changeShowCodeDisableAction,
   fetchCodeDataAction,
-  fetchCodeStatusAction
+  changeShowCodePendingAction,
+  changeShowPanelAction
 } from '../../store'
+import { getCodeState } from '../../service'
+import { storeUseInfoAction } from '@/store/modules/user'
+
 interface IProps {
   children?: ReactNode
 }
@@ -15,21 +19,55 @@ interface IProps {
 const CodePending: React.FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
 
-  const { qrimg, showCodeDisable } = useAppSelector(
+  const { qrimg, showCodeDisable, key } = useAppSelector(
     (state) => ({
       qrimg: state.login.qrimg,
-      showCodeDisable: state.login.showCodeDisable
+      showCodeDisable: state.login.showCodeDisable,
+      key: state.login.key
     }),
     shallowEqual
   )
 
   //轮询二维码状态接口
   useEffect(() => {
-    // dispatch(fetchCodeStatusAction())
-    // return () => {
+    const interCheck = setInterval(async () => {
+      const res = await getCodeState(key)
+      console.log('二维码状态', res)
+
+      //二维码失效
+      if (res.code === 800) {
+        // console.log('过期了')
+        dispatch(changeShowCodeDisableAction(true))
+        clearInterval(interCheck)
+      } else if (res.code === 802) {
+        //待确认图标展示
+        dispatch(changeShowCodePendingAction(false))
+      } else if (res.code === 803) {
+        //授权登录
+        dispatch(changeShowPanelAction(false))
+        clearInterval(interCheck)
+
+        //获取cookie
+        // const cookie = res.cookie
+        // localStorage.setItem('coolie', cookie)
+        //根据cookie将用户信息保存起来
+        dispatch(storeUseInfoAction(res.cookie))
+
+        //重置二维码的展示状态，不然一打开就是pending图标的状态
+        dispatch(changeShowCodePendingAction(true))
+      }
+    }, 3000)
+
+    // //切换到手机登录界面，关闭轮询
+    // if (!showCodeMain) {
     //   clearInterval(interCheck)
     // }
-  }, [])
+
+    return () => {
+      clearInterval(interCheck)
+    }
+  }, [key])
+
   function handleRefresh() {
     dispatch(changeShowCodeDisableAction(false))
     dispatch(fetchCodeDataAction())

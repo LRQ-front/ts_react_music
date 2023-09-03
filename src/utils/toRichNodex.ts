@@ -1,4 +1,5 @@
 export default function stringToNodes(keyword: string, value: string) {
+  //value是关键字，keyword是整个搜索建议
   if (keyword.toUpperCase().includes(value.toUpperCase())) {
     const keyStartIndex = keyword.toUpperCase().indexOf(value.toUpperCase())
 

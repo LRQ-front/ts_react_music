@@ -43,7 +43,7 @@ const DialogHeader: React.FC<IProps> = (props) => {
     dispatch(changeShowCodeDisableAction(false))
 
     //关闭收藏对话框
-    // eventBus.emit('closeDialogCollect', false)
+    // eventBus.emit('closeDialogCollect', fal1se)
     dispatch(changeShowCollectDialog(false))
 
     //关闭删除评论提示框

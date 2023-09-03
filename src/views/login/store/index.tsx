@@ -101,6 +101,7 @@ export const fetchCheckPhoneAction = createAsyncThunk<
     if (res.code === 200) {
       dispatch(storeUseInfoAction(res.cookie))
       dispatch(changeShowPanelAction(false))
+      dispatch(changeShowCodeMainAction(true))
       message.open({
         content: `登录成功`,
         duration: 2
@@ -157,7 +158,7 @@ interface IInitialState {
 const initialState: IInitialState = {
   key: '',
   qrimg: '',
-  showLoginPanel: false,
+  showLoginPanel: false, //登录界面显示
   isDisable: false,
   //展示二维码登录界面或者手机登录界面
   showCodeMain: true,

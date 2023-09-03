@@ -23,16 +23,17 @@ const LoginPhone: React.FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
 
   const { certifyLogin, changePhoneMethod } = props
-  // const [codeValue, setCodeValue] = useState('')
-  const [PhoneStyle, setStyle] = useState(true)
-  const [showCodeErrTip, setShowCodeErrTip] = useState(false)
-  const [hasPhoneTip, setHasPhone] = useState(false)
+  const [codeValue, setCodeValue] = useState('')
+  const [phoneValue, setPhoneValue] = useState('')
+
   const [showVerify, setVerify] = useState(false)
+
   const [emitVerifyCode, setemitVerifyCode] = useState(false)
+
   const [isEmitCode, setIsEmitCode] = useState(false)
   const [countdown, setCountDown] = useState(30)
-  const [showErrCodeTip, setShowErrCodeTip] = useState(false)
-  const [showshouldEmitCodeTip, setShouldEmitCodeTip] = useState(false)
+
+  const [tipMsg, setTipMsg] = useState('')
 
   const { phoneNumber, captcha } = useAppSelector((state) => ({
     phoneNumber: state.login.phoneNumber,
@@ -54,11 +55,13 @@ const LoginPhone: React.FC<IProps> = (props) => {
   }, [countdown])
 
   function handlePhoneBlur(e: any) {
-    if (!e.target.value) return
+    setPhoneValue(e.target.value)
+    if (!e.target.value) return setTipMsg('请输入手机号')
     dispatch(changePhoneNumberAction(e.target.value))
     if (!mobileReg.test(e.target.value)) {
       //手机格式不正确
-      setStyle(false)
+      // setStyle(false)
+      setTipMsg('手机号码格式错误，请更换后重试')
     }
   }
 
@@ -66,12 +69,15 @@ const LoginPhone: React.FC<IProps> = (props) => {
   function handlCodeClick() {
     if (!phoneNumber) {
       //没有输入手机号码则提示
-      setHasPhone(true)
+      // setHasPhone(true)
+      setTipMsg('请输入手机号')
     } else if (!mobileReg.test(phoneNumber)) {
       //手机格式不正确
-      setStyle(false)
+      // setStyle(false)
+      setTipMsg('手机号码格式错误，请更换后重试')
     } else {
       setVerify(true)
+      setTipMsg('')
 
       dispatch(changeCaptchaAction(''))
       // dispatch(changePhoneNumberAction(Number(phoneNumber)))
@@ -80,18 +86,24 @@ const LoginPhone: React.FC<IProps> = (props) => {
 
   //登录按钮
   async function handleLoginClick() {
+    if (tipMsg) return
     //没有输入验证码
-    if (!captcha) {
-      setShowCodeErrTip(true)
+    if (!phoneValue) {
+      // setHasPhone(true)
+      setTipMsg('请输入手机号')
+    } else if (!codeValue) {
+      // setShowCodeErrTip(true)
+      setTipMsg('请输入验证码')
     } else if (!isEmitCode) {
       //还没有获取验证码
-      setShouldEmitCodeTip(true)
+      // setShouldEmitCodeTip(true)
+      setTipMsg('请先获取验证码')
     } else {
-      // setShowCodeErrTip(false)
       //验证验证码
       const res = await authenVerifyCode(Number(phoneNumber), Number(captcha))
       if (res.code !== 200) {
-        setShowErrCodeTip(true)
+        // setShowErrCodeTip(true)
+        setTipMsg('请输入正确得短信验证码')
       } else {
         //检测是否已经注册过手机号
         dispatch(fetchCheckPhoneAction(Number(phoneNumber)))
@@ -101,13 +113,15 @@ const LoginPhone: React.FC<IProps> = (props) => {
 
   //号码输入框失焦点
   function handlePhoneFocus() {
-    setHasPhone(false)
-    setStyle(true)
+    // setHasPhone(false)
+    // setStyle(true)
+    setTipMsg('')
   }
 
   //验证码输入框失去焦点
   function handleVerifychange(e: any) {
-    // setCodeValue(e.target.value)
+    if (!emitVerifyCode) setTipMsg('请先发送获取验证码')
+    setCodeValue(e.target.value)
     dispatch(changeCaptchaAction(e.target.value))
   }
 
@@ -123,29 +137,26 @@ const LoginPhone: React.FC<IProps> = (props) => {
     setCountDown(countdown - 1)
   }
 
-  function handleVerifyFocus() {
-    setShowCodeErrTip(false)
-    setShouldEmitCodeTip(false)
-  }
-
   return (
     <PhoneWrapper certifylogin={certifyLogin ? 1 : 0}>
       <div className="form">
         <div className="phone">
           <Input
+            value={phoneValue}
             placeholder="请输入手机号"
             className="phone-input btn-common-class"
             onBlur={(e) => handlePhoneBlur(e)}
             onFocus={(e) => handlePhoneFocus()}
+            onChange={(e) => setPhoneValue(e.target.value)}
           ></Input>
         </div>
         <div className="certify-code">
           <Input
             placeholder="请输入短信验证码"
-            value={captcha}
+            value={codeValue}
             className="btn-common-class certify-input"
-            onFocus={(e) => handleVerifyFocus()}
             onChange={(e) => handleVerifychange(e)}
+            onBlur={(e) => setTipMsg('')}
           ></Input>
           <Button
             type="primary"
@@ -162,7 +173,13 @@ const LoginPhone: React.FC<IProps> = (props) => {
           </Button>
         </div>
         <div className="tip">
-          {hasPhoneTip && (
+          {tipMsg && (
+            <div className="tip-phone">
+              <i className="icon_04 err"></i>
+              {tipMsg}
+            </div>
+          )}
+          {/* {hasPhoneTip && (
             <div className="tip-phone">
               <i className="icon_04 err"></i>请输入手机号
             </div>
@@ -186,7 +203,7 @@ const LoginPhone: React.FC<IProps> = (props) => {
             <div className="tip-phone ">
               <i className="icon_04 err"></i>请先获取验证码
             </div>
-          )}
+          )} */}
         </div>
         <div className="login-btn">
           <Button

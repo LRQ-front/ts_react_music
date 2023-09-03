@@ -34,6 +34,7 @@ type GetStateFnType = typeof store.getState
 export type IRootState = ReturnType<GetStateFnType>
 type DispatchType = typeof store.dispatch
 
+//函数调用签名
 export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector
 export const useAppDispatch: () => DispatchType = useDispatch
 //下面这个也可以封装

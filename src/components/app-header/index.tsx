@@ -88,10 +88,6 @@ const AppHeader: React.FC<IProps> = () => {
     // dispatch(fetchCodeStatusAction())
   }
 
-  // function handleClick() {
-  //   getAccount().then((res) => console.log(res))
-  // }
-
   return (
     <HeaderWrapper>
       <div className="content wrap-v1" onMouseLeave={(e) => setIsHover(false)}>
