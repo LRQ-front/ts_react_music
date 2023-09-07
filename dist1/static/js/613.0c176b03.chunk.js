@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkts_react_music=self.webpackChunkts_react_music||[]).push([[613],{613:function(t,e,s){s.r(e);var c=s(2791),u=s(184),r=function(){return(0,u.jsx)("div",{children:"Artist"})};e.default=(0,c.memo)(r)}}]);
-//# sourceMappingURL=613.0c176b03.chunk.js.map
