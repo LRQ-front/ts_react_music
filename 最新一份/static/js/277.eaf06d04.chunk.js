@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkts_react_music=self.webpackChunkts_react_music||[]).push([[277],{8277:function(e,c,s){s.r(c);var t=s(7363),u=s(184),n=function(){return(0,u.jsx)("div",{children:"Download"})};c.default=(0,t.memo)(n)}}]);
-//# sourceMappingURL=277.eaf06d04.chunk.js.map
